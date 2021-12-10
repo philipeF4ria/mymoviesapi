@@ -28,6 +28,12 @@ class MoviesRepository {
 
     return row;
   }
+
+  async delete(id) {
+    const deleteOp = await db.query(`DELETE FROM movies WHERE id = $1`, [id]);
+
+    return deleteOp;
+  }
 }
 
 module.exports = new MoviesRepository();

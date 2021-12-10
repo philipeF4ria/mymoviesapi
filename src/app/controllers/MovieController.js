@@ -17,6 +17,12 @@ class MovieController {
       return response.status(400).json({ error: 'id/title/description/image required' });
     }
 
+    const movieExists = await MoviesRepository.findById(id);
+
+    if (movieExists) {
+      return response.status(400).json({error: 'Movie already saved'});
+    }
+
     const movie = await MoviesRepository.create({
       id,
       title,
@@ -28,16 +34,12 @@ class MovieController {
     return response.json(movie);
   }
 
-  async show(request, response) {
+  async delete(request, response) {
     const { id } = request.params;
-    
-    const movie = await MoviesRepository.findById(id);
 
-    if (!movie) {
-      return response.status(404).json({ error: 'Movie not found' });
-    }
+    await MoviesRepository.delete(id);
 
-    return response.json(movie);
+    return response.sendStatus(204);
   }
 }
 
