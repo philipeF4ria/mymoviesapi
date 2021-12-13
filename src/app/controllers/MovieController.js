@@ -17,7 +17,10 @@ class MovieController {
       return response.status(400).json({ error: 'id/title/description/image required' });
     }
 
-    const movieExists = await MoviesRepository.findById(id);
+    const movieExists = await MoviesRepository.findByUserId({
+      id,
+      user_id,
+    });
 
     if (movieExists) {
       return response.status(400).json({error: 'Movie already saved'});
@@ -28,6 +31,18 @@ class MovieController {
       title,
       description,
       image_url,
+      user_id,
+    });
+
+    return response.json(movie);
+  }
+
+  async show(request, response) {
+    const { id } = request.params;
+    const user_id = request.user.id;
+
+    const movie = await MoviesRepository.findByUserId({
+      id,
       user_id,
     });
 

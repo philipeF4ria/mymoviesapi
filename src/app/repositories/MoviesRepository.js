@@ -23,6 +23,12 @@ class MoviesRepository {
     return rows;
   }
 
+  async findByUserId({ id, user_id }) {
+    const [ row ] = await db.query('SELECT * FROM movies WHERE id = $1 AND user_id = $2', [id, user_id]);
+
+    return row;
+  }
+
   async findById(id) {
     const [ row ] = await db.query('SELECT * FROM movies WHERE id = $1', [id]);
 

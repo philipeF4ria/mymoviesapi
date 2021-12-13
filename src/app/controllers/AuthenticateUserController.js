@@ -30,6 +30,11 @@ class UserAuthenticationController {
 
     delete user.password;
 
+    console.log({
+      user,
+      token,
+    });
+
     return response.json({ user, token });
   }
 }

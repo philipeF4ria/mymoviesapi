@@ -26,6 +26,8 @@ class UserController {
 
     delete user.password;
 
+    console.log(user);
+
     return response.json(user);
   }
 }
